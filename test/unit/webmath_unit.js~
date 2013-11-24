@@ -39,58 +39,46 @@ describe("WebMath", function() {
 	};
 	
 	beforeEach(function() {
-		initElements(this);
+		this.answerInput = $('input.iwm_answer');
+		this.submitButton = $('button.iwm_submit');
+		this.instructionsField = $('.iwm_instructions');
+		this.feedbackField = $('.iwm_feedback');
+		this.chooseAdditionButton = $('button.iwm_choose_addition');
 	});
 	
-	it("has a working start function", function() {
-		expect(function() { WebMath.start() }).not.toThrow();
-	});
-	
-	it("has a working getAllElements function", function() {
-		expect(function() { WebMath.getAllElements() }).not.toThrow();
-	});
-	
-	it("gives all elements", function() {
-		expect(WebMath.getAllElements()).toEqual(WebMath.elements);
-	});
-	
-	it("resets when start function is called twice", function() {
-		WebMath.start();
-		WebMath.start();
-		
-		elements = WebMath.getAllElements();
-		for(element in elements) {
-			expect($('.' + elements[element].attr('class')).length > 1).toBeFalsy();
-		};
-	});
-	
-	it("starts without chosen exercise", function() {
-		expect(typeof(WebMath.getCurrentExercise())).toEqual('undefined');
-	});
-	
-	it("clears elements object", function() {
-		WebMath.elements.test = $('<span></span>', {
-			'class' : 'iwm_feedback'
+	describe(",Globally,", function() {
+		it("has a working start function", function() {
+			expect(function() { WebMath.start() }).not.toThrow();
 		});
-		WebMath.clearElements();
-		expect(size(WebMath.elements) == 0).toBeTruthy();
+		
+		it("has an exercise object", function() {
+			expect(typeof(WebMath.getCurrentExercise()) == 'object').toBeTruthy();
+		});
+		
+		it("has a working getAllElements function", function() {
+			expect(function() { WebMath.getAllElements() }).not.toThrow();
+		});
+		
+		it("gives all elements", function() {
+			expect(WebMath.getAllElements()).toEqual(WebMath.elements);
+		});
+		
+		it("resets when start function is called twice", function() {
+			WebMath.start();
+			WebMath.start();
+			
+			elements = WebMath.getAllElements();
+			for(element in elements) {
+				expect($('.' + elements[element].attr('class')).length > 1).toBeFalsy();
+			};
+		});
 	});
 	
-	it("clears all rendered elements", function() {
-		WebMath.elements.test = $('<span></span>', {
-			'class' : 'iwm_feedback'
-		}).appendTo('body');
-		WebMath.clearElements();
-		expect(exists($('.iwm_feedback'))).toBeFalsy();
-	});
-	
-	
-	describe("addition exercise", function() {
+	/* describe("WebMath addition exercise", function() {
 		
 		beforeEach(function() {
-			WebMath.start();
+			WebMath.restart();
 			this.chooseAdditionButton.click();
-			initElements(this);
 		});
 		
 		it("has a choose addition button", function() {
@@ -102,8 +90,7 @@ describe("WebMath", function() {
 		});
 		
 		it("has a choose button that switches to addition", function() {
-			this.chooseAdditionButton.click();
-			expect(WebMath.getCurrentExercise().getType()).toEqual('addition');
+			flunk("TODO");
 		});
 		
 		testExercise();
@@ -121,49 +108,11 @@ describe("WebMath", function() {
 	});
 	
 	describe("WebMath subtraction exercise", function() {
-		beforeEach(function() {
-			WebMath.start();
-			this.chooseSubtractionButton.click();
-			initElements(this);
-		});
 		
-		it("has a choose addition button", function() {
-			expect(exists(this.chooseSubtractionButton)).toBeTruthy();
-		});
-		
-		it("has a choose addition button with correct label", function() {
-			expect(this.chooseSubtractionButton.text()).toEqual("Subtraction");
-		});
-		
-		it("has a choose button that switches to subtraction", function() {
-			this.chooseSubtractionButton.click();
-			expect(WebMath.getCurrentExercise().getType()).toEqual('subtraction');
-		});
-		
-		it("has a choose button that updates instruction", function() {
-			this.chooseSubtractionButton.click();
-			expect(this.instructionsField.text()).toEqual(
-				WebMath.getCurrentExercise().getInstructions());
-		});
-	});
+	}); */
 });
 
 describe("Exercise", function() {
-	
-	describe("factory", function() {
-		it("should create exercise of given values", function() {
-			type = randomString();
-			b = randomInt();
-			instructions = randomString();
-			answer = randomInt();
-			exercise = new Exercise.getExercise(type, b, instructions, answer);
-			
-			expect(exercise.getType()).toEqual(type);
-			expect(exercise.getB()).toEqual(b);
-			expect(exercise.getInstructions()).toEqual(instructions);
-			expect(exercise.getAnswer()).toEqual(answer);
-		});
-	});
 	
 	describe("Addition", function() {
 		beforeEach(function() {
@@ -189,10 +138,6 @@ describe("Exercise", function() {
 			b = parseInt(instruction.match(/[1-9][0-9]*/));
 			correctAnswer = -b;
 			expect(answer).toEqual(correctAnswer);
-		});
-		
-		it("gives correct exercise type", function() {
-			expect(this.exercise.getType()).toEqual('addition');
 		});
 	});
 	
