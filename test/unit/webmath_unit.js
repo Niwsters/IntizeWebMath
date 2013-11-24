@@ -118,14 +118,23 @@ describe("WebMath", function() {
 			
 			expect(this.feedbackField.text()).toEqual('Incorrect!');
 		});
+		
+		it("has a choose button that updates instruction", function() {
+			this.chooseAdditionButton.click();
+			initElements(this);
+			expect(this.instructionsField.text()).toEqual(
+				WebMath.getCurrentExercise().getInstructions());
+		});
 	});
 	
-	describe("WebMath subtraction exercise", function() {
+	describe("subtraction exercise", function() {
 		beforeEach(function() {
 			WebMath.start();
 			this.chooseSubtractionButton.click();
 			initElements(this);
 		});
+		
+		testExercise();
 		
 		it("has a choose addition button", function() {
 			expect(exists(this.chooseSubtractionButton)).toBeTruthy();
@@ -142,6 +151,7 @@ describe("WebMath", function() {
 		
 		it("has a choose button that updates instruction", function() {
 			this.chooseSubtractionButton.click();
+			initElements(this);
 			expect(this.instructionsField.text()).toEqual(
 				WebMath.getCurrentExercise().getInstructions());
 		});

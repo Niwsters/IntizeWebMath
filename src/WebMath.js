@@ -1,23 +1,6 @@
 WebMath = function() {
 	this.start = function() {
-		
-		this.clearElements();
-		
-		this.elements.chooseAddition = $('<button />', {
-			'class' : 'iwm_choose_addition',
-			'text' : 'Addition',
-			'onClick' : 'WebMath.chooseAddition()'
-		});
-		
-		this.elements.chooseSubtraction = $('<button />', {
-			'class' : 'iwm_choose_subtraction',
-			'text' : 'Subtraction',
-			'onClick' : 'WebMath.chooseSubtraction()'
-		});
-		
-		for(element in this.elements) {
-			this.elements[element].appendTo('body');
-		};
+		this.renderChooseButtons();
 	};
 	
 	this.clearElements = function() {
@@ -43,39 +26,29 @@ WebMath = function() {
 		}
 	};
 	
-	this.getAdditionExercise = function() {
-		this.currentExercise =  new Exercise.getAdditionExercise();
-		
+	this.renderChooseButtons = function() {
 		this.clearElements();
-		this.start();
 		
-		this.elements.instructions = $('<span></span>', {
-			'class' : 'iwm_instructions',
-			'text' : this.getCurrentExercise().getInstructions()
-		}).appendTo('body');
+		this.elements.chooseAddition = $('<button />', {
+			'class' : 'iwm_choose_addition',
+			'text' : 'Addition',
+			'onClick' : 'WebMath.startAdditionExercise()'
+		});
 		
-		this.elements.input = $('<input />', {
-			'class' : 'iwm_answer'
-		}).appendTo('body');
+		this.elements.chooseSubtraction = $('<button />', {
+			'class' : 'iwm_choose_subtraction',
+			'text' : 'Subtraction',
+			'onClick' : 'WebMath.startSubtractionExercise()'
+		});
 		
-		this.elements.feedback = $('<span></span>', {
-			'class' : 'iwm_feedback'
-		}).appendTo('body');
-		
-		this.elements.submit = $('<button />', {
-			'class' : 'iwm_submit',
-			'text' : 'Submit',
-			'onClick' : 'WebMath.giveFeedback()'
-		}).appendTo('body');
-		
-		return this.getCurrentExercise();
+		for(element in this.elements) {
+			this.elements[element].appendTo('body');
+		};
 	};
 	
-	this.getSubtractionExercise = function() {
-		this.currentExercise = new Exercise.getSubtractionExercise();
-		
+	this.startExercise = function() {
 		this.clearElements();
-		this.start();
+		this.renderChooseButtons();
 		
 		this.elements.instructions = $('<span></span>', {
 			'class' : 'iwm_instructions',
@@ -95,21 +68,20 @@ WebMath = function() {
 			'text' : 'Submit',
 			'onClick' : 'WebMath.giveFeedback()'
 		}).appendTo('body');
-		
-		return this.getCurrentExercise();
+	};
+	
+	this.startAdditionExercise = function() {
+		this.currentExercise = new Exercise.getAdditionExercise();
+		this.startExercise();
+	};
+	
+	this.startSubtractionExercise = function() {
+		this.currentExercise = new Exercise.getSubtractionExercise();
+		this.startExercise();
 	};
 	
 	this.getAnswer = function() {
 		return this.getCurrentExercise().getAnswer();
-	};
-	
-	this.chooseSubtraction = function() {
-		this.currentExercise = this.getSubtractionExercise();
-		this.elements.instructions.text(this.currentExercise.getInstructions());
-	};
-	
-	this.chooseAddition = function() {
-		this.currentExercise = this.getAdditionExercise();
 	};
 };
 
