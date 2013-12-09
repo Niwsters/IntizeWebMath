@@ -14,11 +14,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/*.js',
-      'test/acceptance/*.js',
-	  'test/testing_skeleton.html',
-	  'test/helper.js',
-	  'lib/*.js'
+		'test/helper.js',
+		'lib/*.js',
+		'src/*.js',
+		'test/testing_skeleton.html',
+		'test/acceptance/*.js'
     ],
 
 

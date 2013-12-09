@@ -36,11 +36,11 @@ function randomString() {
 	};
 	
     return text;
-}
+};
 
 function randomInt() {
 	-25 + Math.floor(Math.random()*50)
-}
+};
 
 size = function(obj) {
     var size = 0, key;
@@ -48,4 +48,22 @@ size = function(obj) {
         if (obj.hasOwnProperty(key)) size++;
     }
     return size;
+};
+
+contains = function(container, element) {
+	return $(container).find(element).length > 0
+};
+
+containsExercise = function(container) {
+	instructions = container.find('.iwm_instructions');
+	submitButton = container.find('.iwm_submit');
+	
+	if( contains(container, instructions) &&
+		contains(container, submitButton) &&
+		submitButton.text() == 'Submit'
+		) {
+		return true;
+	} else {
+		return false;
+	};
 };
